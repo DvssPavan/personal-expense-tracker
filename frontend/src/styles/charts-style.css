@@ -1,0 +1,62 @@
+.container-chart{
+    display: flex;
+  justify-content: center;
+  
+  min-width: 75vh;
+  min-height: 100vh;
+   
+} 
+
+.container-outer-box{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    /* margin-top: 20px; */
+    /* min-width: 100vh; */
+}
+.container-box{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 20px;
+    min-width: 100vh;
+}
+.year-dial-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .year-dial {
+    height:auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .year-option {
+    padding: 5px;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .year-option.selected {
+    font-weight: bold;
+    color: #007bff;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+  }
+  
+  .year-option:not(.selected):hover {
+    background-color: #e9ecef;
+  }
+  
+
+  
