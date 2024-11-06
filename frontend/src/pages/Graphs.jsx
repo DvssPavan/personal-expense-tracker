@@ -20,12 +20,14 @@ ChartJS.register(
 
 const Graphs = ({yearlyExpenses, categorizedExpenses}) => {
     const { logout } = useAuth();
-    console.log("Year expenesses from Graphs", yearlyExpenses);
+    // console.log("In Graphs");
+    // console.log("Year expenesses from Graphs", yearlyExpenses);
+    // console.log("Categorized expenses from Graphs", categorizedExpenses);
 
     return (
     <div>
-        <BarChart yearlyExpenses={yearlyExpenses} />
-        <PieChart categorizedExpenses = {categorizedExpenses}/>
+        {yearlyExpenses ? <BarChart yearlyExpenses={yearlyExpenses} /> : <p>Sorry, no yearly expenses </p>}
+        {categorizedExpenses ? <PieChart categorizedExpenses = {categorizedExpenses}/> : <p>Sorry, no monthly expenses for the selected month</p>}
     </div>
     );
 };

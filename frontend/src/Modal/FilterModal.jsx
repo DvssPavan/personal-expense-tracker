@@ -4,6 +4,11 @@ import { useExpense } from '../context/ExpenseContext';
 
 const FilterModal = () => {
     const months = ['Jan', 'Feb', 'March', 'April' , 'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthMap = months.reduce((acc, month, index) => {
+      acc[month] = index + 1;
+      return acc;
+  }, {});
+
     const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
 
     const { addFilter } = useExpense();
@@ -33,7 +38,8 @@ const FilterModal = () => {
     const applyFilter = () => {
         setShowFilterOnPage(true);
         setShowModal(false);
-        addFilter(view === 'Month' ? { month: selectedMonth } : { quarter: selectedQuarter });
+        addFilter(view === 'Month' ? { month: monthMap[selectedMonth] } : { quarter: selectedQuarter });
+  
     }
     const resetFilter = () => {
         setShowFilterOnPage(false);
@@ -61,7 +67,7 @@ const FilterModal = () => {
           <Modal.Body>
             <h5>Show Spending By</h5>
             <ButtonGroup className="mb-3">
-            {['Month', 'Quarter'].map((option) => (
+            {['Month'].map((option) => (
               <Button
                 key={option}
                 variant={view === option ? 'primary' : 'outline-primary'}
@@ -88,7 +94,7 @@ const FilterModal = () => {
             </>
           )}
 
-          {view === 'Quarter' && (
+          {/* {view === 'Quarter' && (
             <>
             <h5 className="mt-3">Choose Month</h5>
             <ButtonGroup>
@@ -103,7 +109,7 @@ const FilterModal = () => {
               ))}
             </ButtonGroup>
             </>
-          )}
+          )} */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={applyFilter} disabled={!selectedMonth && !selectedQuarter}>

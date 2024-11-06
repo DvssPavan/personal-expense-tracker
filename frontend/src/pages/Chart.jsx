@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { useExpense } from '../context/ExpenseContext';
 import { useAuth } from '../context/AuthContext';
-import { getTotalCostForEachCategoryForYear, getTotalCostForYear } from '../services/expenseService';
+import { getTotalCostForEachCategoryForYear, getTotalExpenseForEachMonthOfTheYear, getTotalCostForEachCategoryForMonth, getTotalCostForYear } from '../services/expenseService';
 import Graphs from './Graphs';
 import '../styles/charts-style.css';
 import { Form } from 'react-bootstrap';
@@ -10,7 +10,7 @@ import FilterModal from '../Modal/FilterModal';
 
 const Chart = () => {
     const { logout } = useAuth();
-    const { yearFilter, addYearFilter} = useExpense();
+    const { yearFilter, addYearFilter, filters } = useExpense();
     const [selectedMonth, setSelectedMonth] = useState('');
     const [yearlyExpenses, setYearlyExpenses] = useState([]);
     const [categorizedExpenses, setCategorizedExpenses] = useState([]);
@@ -35,14 +35,13 @@ const Chart = () => {
     setLoading(true);
     const response = await getTotalCostForEachCategoryForYear(year);
     setCategorizedExpenses(response.data);
-    console.log('Categorized expenses:', response.data);
+    // console.log('Categorized expenses:', response.data);
     setLoading(false);
 
   };
 
     const toggleFilter = () => {
         setIsFilterOpen(!isFilterOpen);
-        console.log(isFilterOpen);
     }
 
   const fetchTotalExpenseForYear = async (year) => {
@@ -65,8 +64,23 @@ const Chart = () => {
           setLoading(false);
       };
 
+      const fetchAllMontlyExpenses = async () => {
+
+          const expenses = await getTotalExpenseForEachMonthOfTheYear(yearFilter);  
+          const categorizedExpenses = await getTotalCostForEachCategoryForMonth(yearFilter, filters['month']);
+          // console.log('Categorized expenses: from fetchAllMontlyExpenses ', categorizedExpenses.data);
+          setCategorizedExpenses(categorizedExpenses.data);
+          setYearlyExpenses(expenses.data);
+          setLoading(false);
+      };
+
+      if(filters['month']) {
+        fetchAllMontlyExpenses();
+      }
+      else{
       fetchAllYearlyExpenses();
-  }, []); // Run this effect only once on component mountetIsFilterOpen(!isFilterOpen);
+      }
+  }, [filters]); // Run this effect only once on component mountetIsFilterOpen(!isFilterOpen);
 
     return (
         <div className="container-chart ">
@@ -93,13 +107,14 @@ const Chart = () => {
             
             
             <div className='d-flex justify-content-between'>
-            {console.log('Yearly expenses:', yearlyExpenses)}
+            {/* {console.log('Yearly expenses: from char', yearlyExpenses)}
+            {console.log('Categorized expenses: from chart', categorizedExpenses)} */}
             <div className="d-flex justify-content-between">
                     {loading ? (
                         <div>Loading data...</div> // Display loading message until data is ready
-                    ) : categorizedExpenses.length> 0 ? (
-                        <Graphs yearlyExpenses={yearlyExpenses} categorizedExpenses={categorizedExpenses} /> // Render Graphs only when data is ready
-                    ) : <div> Ooops......No data found for this year.. </div>}
+                    ) :
+                        (<Graphs yearlyExpenses={yearlyExpenses} categorizedExpenses={categorizedExpenses} />) // Render Graphs only when data is ready
+                    }
             </div>
             </div>
         </div>

@@ -4,14 +4,26 @@ import { Bar } from 'react-chartjs-2';
 import { useExpense } from '../context/ExpenseContext';
 
 const BarChart = ({ yearlyExpenses }) => {
-    const { yearFilter} = useExpense();
-    console.log("Yearly expenses from BarChart", yearlyExpenses);
+    const { yearFilter, filters} = useExpense();
+    let db_labels = [];
+    let db_data = [];
+    // console.log("Yearly expenses from BarChart", yearlyExpenses);
+    if(filters['month']) {
+        db_labels = yearlyExpenses.map((expense) => expense.month);
+        db_data = yearlyExpenses.map((expense) => expense.totalCost);
+    }
+    else{
+        db_labels = yearlyExpenses.map((expense) => expense.year);
+        
+        db_data = yearlyExpenses.map((expense) => expense.totalExpense);
+    }
+
     const data = {
-        labels: yearlyExpenses.map((expense) => expense.year),
+        labels: db_labels,
         datasets: [
             {
                 label: 'Total Expenses',
-                data: yearlyExpenses.map((expense) => expense.totalExpense),
+                data: db_data,
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: yearlyExpenses.map((expense) =>
                 expense.year === yearFilter ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'),

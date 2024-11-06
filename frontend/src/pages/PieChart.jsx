@@ -1,6 +1,7 @@
 // src/components/DynamicPieChart.js
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import { useExpense } from '../context/ExpenseContext';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -8,6 +9,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const DynamicPieChart = ({ categorizedExpenses }) => {
     // Generate random colors for each category
     const colors = categorizedExpenses.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+    const {yearFilter} = useExpense();
 
     const data = {
         labels: categorizedExpenses.map((item) => item.category),
@@ -34,7 +36,7 @@ const DynamicPieChart = ({ categorizedExpenses }) => {
             },
         },
     };
-
+    
     return <Pie data={data} options={options} />;
 };
 

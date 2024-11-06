@@ -52,7 +52,7 @@ const Dashboard = () => {
     gridRef.current = params.api;
     const dataSource = {
       getRows: async (params) => {
-        console.log('asking for ' + params.startRow + ' to ' + params.endRow)
+        // console.log('asking for ' + params.startRow + ' to ' + params.endRow)
         setTimeout(async () => {
         // const expenses  = await getExpenses();
         const rowThisPage = expenses.slice(params.startRow, params.endRow);
