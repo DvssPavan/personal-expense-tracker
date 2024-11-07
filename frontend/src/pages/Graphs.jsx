@@ -25,7 +25,7 @@ const Graphs = ({yearlyExpenses, categorizedExpenses}) => {
     // console.log("Categorized expenses from Graphs", categorizedExpenses);
 
     return (
-    <div>
+    <div style={{ width: '400px', height: '400px' }}>
         {yearlyExpenses ? <BarChart yearlyExpenses={yearlyExpenses} /> : <p>Sorry, no yearly expenses </p>}
         {categorizedExpenses ? <PieChart categorizedExpenses = {categorizedExpenses}/> : <p>Sorry, no monthly expenses for the selected month</p>}
     </div>

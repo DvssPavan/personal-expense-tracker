@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import com.personal.expensetracker.model.Expense;
 import com.personal.expensetracker.service.ExpenseService;
 import com.personal.helper.CategoryTotal;
+import com.personal.helper.MonthlyExpense;
+import com.personal.helper.MonthlyExpenseVerbose;
 
 import java.math.BigDecimal;
+import java.time.Month;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/expense")
@@ -86,5 +90,21 @@ public class ExpenseController {
         return ResponseEntity.ok(categoryTotals);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/yearly-expenses")
+    public ResponseEntity<List<MonthlyExpenseVerbose>> getTotalExpenseForEachMonthOfTheYear(@RequestParam int year) {
+        List<MonthlyExpense> monthlyExpenses = expenseService.getTotalExpenseForEachMonthOfTheYear(year);
+
+        List<MonthlyExpenseVerbose> verbose = monthlyExpenses.stream().map(projection -> new MonthlyExpenseVerbose(Month.of(projection.getMonth()).name(), projection.getTotalCost())).collect(Collectors.toList());
+        return ResponseEntity.ok(verbose);
+    }
+    
+//    @GetMapping("/yearly-expenses")
+//    public ResponseEntity<List<MonthlyExpense>> getTotalExpenseForEachMonthOfTheYear(@RequestParam int year) {
+//        List<MonthlyExpense> monthlyExpenses = expenseService.getTotalExpenseForEachMonthOfTheYear(year);
+//        
+////        List<MonthlyExpenseVerbose> verbose = monthlyExpenses.stream().map(projection -> new MonthlyExpenseVerbose(Month.of(projection.getMonth()).name(), projection.getTotalCost())).collect(Collectors.toList());
+//        return ResponseEntity.ok(monthlyExpenses);
+//    }
 
 }

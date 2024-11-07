@@ -26,4 +26,16 @@ const categories = [
     'Miscellaneous': 'MISCELLANEOUS'
   };
 
-  export { categories, categories_map };
+  const months = ['Jan', 'Feb', 'March', 'April' , 'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const months1 = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL' , 'MAY','JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+  const monthMap = months.reduce((acc, month, index) => {
+    acc[month] = index + 1;
+    return acc;
+}, {});
+
+const indexMonthMap = months1.reduce((acc, month, index) => {
+  acc[index+1] = month;
+  return acc;
+}, {});
+
+  export { categories, categories_map, months, monthMap, indexMonthMap };

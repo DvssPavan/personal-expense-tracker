@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.personal.expensetracker.model.Expense;
 import com.personal.helper.CategoryTotal;
+import com.personal.helper.MonthlyExpense;
+import com.personal.helper.MonthlyExpenseProjection;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -46,4 +48,13 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
             "{ $group: { _id: '$category', totalCost: { $sum: { $toDouble: \"$cost\" } } } }"
         })
         List<CategoryTotal> getTotalCostForEachCategoryForMonth(LocalDate startOfMonth, LocalDate startOfNextMonth);
+        
+
+        @Aggregation(pipeline = {
+        	    "{ $match: { date: { $gte: ?0, $lt: ?1 } } }",
+        	    "{ $group: { _id: { month: { $month: '$date' } }, totalCost: { $sum: { $toDouble: '$cost' } } } }",
+        	    "{ $sort: { '_id.month': 1 } }",
+        	    "{ $project: { _id: 0, month: '$_id.month', totalCost: 1 } }"
+        	})
+        List<MonthlyExpense> getTotalExpenseForEachMonthOfTheYear(LocalDate startOfYear, LocalDate startOfNextYear);
 }

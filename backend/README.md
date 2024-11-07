@@ -1,5 +1,5 @@
 
-# Expense Tracker Application
+# Personal Expense Tracker Application
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -7,14 +7,15 @@
 - [Setup](#setup)
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
-- [Swagger Documentation](#swagger-documentation)
 
 ## Introduction
 
-The Expense Tracker Application is a Java-based web application developed using Spring Boot 3, MongoDB for data storage, Mongock for database migration, and Swagger for API documentation. It allows users to manage and track their expenses with CRUD (Create, Read, Update, Delete) operations.
+The Expense Tracker Application is a web application developed using React.js, Spring Boot 3, MongoDB for data storage, Mongock for database migration, and Swagger for API documentation. It allows users to manage and track their expenses using interactive charts and dashboards.
 
 ## Technologies Used
 
+- React.js
+- react-chartjs-2
 - Java 17
 - Spring Boot 3.0.0
 - MongoDB
@@ -26,15 +27,26 @@ The Expense Tracker Application is a Java-based web application developed using 
 1. **Clone the repository:**
 
     ```bash
-    [git clone https://github.com/your-username/expense-tracker.git]
-    cd expense-tracker
+    [git clone https://github.com/your-username/personal-expense-tracker.git]
+    cd personal-expense-tracker
     ```
 
 2. **Build the application:**
-
+    - Backend
     ```bash
-    ./mvnw clean package
+    cd backend
+    ./mvn clean install
+    ./mvn spring-boot:run
     ```
+    - Front end
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
+       
+
+
 
 3. **Set up MongoDB:**
 
@@ -44,31 +56,31 @@ The Expense Tracker Application is a Java-based web application developed using 
 
     Update `src/main/resources/application.properties` with the appropriate MongoDB and other configuration settings.
 
-## Running the Application
+## Access the Application
 
-1. **Run the JAR file:**
+1. **Frontend:**
 
-    ```bash
-    java -jar target/expense-tracker-<version>.jar
-    ```
+   Navigate to `http://localhost:5173` in your web browser.
 
    Replace `<version>` with the appropriate version number.
 
-2. **Access the application:**
+2. **Backend:**
 
-   Navigate to `http://localhost:8080` in your web browser.
+   The API documentation is available using Swagger UI. Access it by navigating to `http://localhost:8080/swagger-ui.html` after starting the application.
+
 
 ## API Endpoints
 
 The API supports the following CRUD operations:
 
-- **GET /api/expenses**: Retrieve all expenses.
-- **GET /api/expenses/{id}**: Retrieve a specific expense by ID.
-- **POST /api/expenses**: Create a new expense.
-- **PUT /api/expenses**: Update an existing expense.
-- **DELETE /api/expenses/{id}**: Delete an expense by ID.
+- **GET /expense**: Retrieve all expenses.
+- **PUT /expense**: Update an expense
+- **POST /expense**: Create a new expense
+- **GET /expense/{name}**: Get expense by name
+- **GET /expense/yearly-expenses?year={year}**: Get sum of all expenses for every month of the year
+- **GET /expense/total-cost/year**: 
 
-## Swagger Documentation
 
-The API documentation is available using Swagger UI. Access it by navigating to `http://localhost:8080/swagger-ui.html` after starting the application.
+
+
 

@@ -7,7 +7,7 @@ const Home = () => {
     const [activeComponent, setActiveComponent] = useState('dashboard'); // Default to "dashboard"
 
     return (
-        <Container className="text-center mt-4">
+        <Container className="text-center mt-4  ">
             <h2>Welcome to the Home Page</h2>
             <ButtonGroup className="mb-4">
                 <Button
@@ -24,7 +24,7 @@ const Home = () => {
                 </Button>
             </ButtonGroup>
 
-            <div className="component-display">
+            <div className="component-display text-start">
                 {activeComponent === 'dashboard' && <Dashboard />}
                 {activeComponent === 'chart' && <Chart />}
             </div>

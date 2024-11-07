@@ -26,7 +26,7 @@ export const ExpenseProvider = ({ children }) => {
   const addFilter = (filter) => {
     // if (isAuthenticated) {
       if (true) {
-        // console.log(filter);
+        console.log("Filter: ", filter);
         setFilters(filter);
       } else {
         console.error("User must be logged in");

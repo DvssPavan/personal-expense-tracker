@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownButton, Button, ButtonGroup, Modal, ToggleButton } from 'react-bootstrap';
 import { useExpense } from '../context/ExpenseContext';
+import { months, monthMap } from '../misc/Enums';
 
 const FilterModal = () => {
-    const months = ['Jan', 'Feb', 'March', 'April' , 'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const monthMap = months.reduce((acc, month, index) => {
-      acc[month] = index + 1;
-      return acc;
-  }, {});
+
 
     const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
 

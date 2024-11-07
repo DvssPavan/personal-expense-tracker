@@ -1,12 +1,12 @@
 // src/pages/Dashboard.jsx
-import React, {useState, useEffect, useRef, useCallback} from 'react';
-import { useExpense } from '../context/ExpenseContext';
-import { useAuth } from '../context/AuthContext';
-import { categories, categories_map } from '../misc/Enums';
-import { AgGridReact } from 'ag-grid-react';
-import {addExpenseToServer, getExpenses} from '../services/expenseService';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useExpense } from "../context/ExpenseContext";
+import { useAuth } from "../context/AuthContext";
+import { categories, categories_map } from "../misc/Enums";
+import { AgGridReact } from "ag-grid-react";
+import { addExpenseToServer, getExpenses } from "../services/expenseService";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Dashboard = () => {
   const { expenses, loading, addExpense } = useExpense();
@@ -18,23 +18,35 @@ const Dashboard = () => {
   const [gridApi, setGridApi] = useState(null);
 
   const [columnDefs] = useState([
-    { field: 'id', headerName: 'Row No'},
-    { field: 'label', headerName: 'Label', filter: 'agTextColumnFilter' },
-    { field: 'cost', headerName: 'Cost', },
-    { field: 'date', headerName: 'Date', filter: 'agDateColumnFilter' },
-    { field: 'category', headerName: 'Category' },
+    { field: "id", headerName: "Row No" },
+    { field: "label", headerName: "Label", filter: "agTextColumnFilter" },
+    { field: "cost", headerName: "Cost" },
+    { field: "date", headerName: "Date", filter: "agDateColumnFilter" },
+    { field: "category", headerName: "Category" },
   ]);
 
   // State to manage the new row data
-  const [newRow, setNewRow] = useState({ label: '', cost: '', date: '', category: '' });
+  const [newRow, setNewRow] = useState({
+    label: "",
+    cost: "",
+    date: "",
+    category: "",
+  });
 
   // Handle adding a new row
   const handleAddRow = () => {
     if (newRow.label && newRow.cost && newRow.date && newRow.category) {
-      addExpenseToServer({"label": newRow.label.toString(), "cost": parseFloat(newRow.cost), "date": newRow.date.toString(), "category": categories_map[newRow.category] });
+      addExpenseToServer({
+        label: newRow.label.toString(),
+        cost: parseFloat(newRow.cost),
+        date: newRow.date.toString(),
+        category: categories_map[newRow.category],
+      });
       addExpense(newRow);
-      setNewRow({ label: '', cost: '', date: '', category: '' }); // Reset input fields
-      alert("Row added successfully, Please refresh the page to see the changes");
+      setNewRow({ label: "", cost: "", date: "", category: "" }); // Reset input fields
+      alert(
+        "Row added successfully, Please refresh the page to see the changes"
+      );
     } else {
       console.error("Please enter values for both label, cost and date");
     }
@@ -47,35 +59,41 @@ const Dashboard = () => {
   };
 
   // onGridReady callback to initialize the grid and set the datasource
-  const onGridReady =  useCallback((params) => {
+  const onGridReady = useCallback((params) => {
     setGridApi(params.api);
     gridRef.current = params.api;
     const dataSource = {
       getRows: async (params) => {
         // console.log('asking for ' + params.startRow + ' to ' + params.endRow)
         setTimeout(async () => {
-        // const expenses  = await getExpenses();
-        const rowThisPage = expenses.slice(params.startRow, params.endRow);
-        const lastRow = expenses.length <= params.endRow ? expenses.length : -1;
-        params.successCallback(rowThisPage, lastRow);
+          // const expenses  = await getExpenses();
+          const rowThisPage = expenses.slice(params.startRow, params.endRow);
+          const lastRow =
+            expenses.length <= params.endRow ? expenses.length : -1;
+          params.successCallback(rowThisPage, lastRow);
         }, 500);
       },
     };
     params.api.sizeColumnsToFit();
 
-    params.api.setGridOption('datasource', dataSource);
+    params.api.setGridOption("datasource", dataSource);
   }, []);
 
   return (
-    <div className=' container w-100 mt-2'>
-    <div className='d-flex justify-content-between'>
-      <h2>Hello X, Here's your expense Dashboard!</h2>
-      <button className="btn btn-secondary mb-3" onClick={logout}>Logout</button>
-    </div>
+    <div className=" container w-100 mt-2 ">
+      <div className="d-flex justify-content-between">
+        <h2>
+          Hello <span className="text-primary ">X,</span> Here's your expense
+          Dashboard!
+        </h2>
+        <button className="btn px-4 py-2  btn-secondary mb-3" onClick={logout}>
+          Logout
+        </button>
+      </div>
 
       {/* Table to display expenses with an option to add new rows */}
-      <table className="table table-striped table-bordered">
-        <thead className="thead-dark">
+      <table className="table table-striped table-bordered mb-3">
+        <thead className="">
           <tr>
             <th>Label</th>
             <th>Cost</th>
@@ -133,17 +151,17 @@ const Dashboard = () => {
                 value={newRow.category}
                 onChange={handleInputChange}
               >
-              <option value="">Select Category</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
+                <option value="">Select Category</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
                 ))}
               </select>
             </td>
             <td>
               <button className="btn btn-primary mt-2" onClick={handleAddRow}>
-              Add Row
+                Add Row
               </button>
             </td>
           </tr>
@@ -151,9 +169,7 @@ const Dashboard = () => {
       </table>
 
       {/* Add Row Button */}
-      <div>
-        
-      </div>
+      <div></div>
 
       {/* Search Input
       <input
@@ -164,11 +180,15 @@ const Dashboard = () => {
       /> */}
 
       {/* AG Grid Table */}
-      <div className="ag-theme-alpine container mt-2" style={{ height: 400, width: '100%' }}>
+      <div
+        className="ag-theme-alpine container mt-2"
+        style={{ height: 450, width: "100%" }}
+      >
         <AgGridReact
           ref={gridRef}
+          className="expense-data"
           // rowData={expenses}
-          rowModelType="infinite" 
+          rowModelType="infinite"
           columnDefs={columnDefs}
           onGridReady={onGridReady}
           pagination={true}
@@ -178,15 +198,13 @@ const Dashboard = () => {
         />
       </div>
     </div>
-
-
   );
 };
 
 export default Dashboard;
 
-
-{ /* TODO's
+{
+  /* TODO's
 1. APIs to fetch and save data
 2. Add a delete button to delete a row
 3. Add a search bar to filter rows
@@ -195,4 +213,5 @@ export default Dashboard;
 6. Add a feature to sort rows
 7. Add a feature to filter rows based on category
 8. Add a feature to filter rows based on date
-*/ }
+*/
+}

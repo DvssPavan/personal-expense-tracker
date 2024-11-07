@@ -17,11 +17,6 @@ const Chart = () => {
     const [loading, setLoading] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const months = [
-    , 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
@@ -80,7 +75,7 @@ const Chart = () => {
       else{
       fetchAllYearlyExpenses();
       }
-  }, [filters]); // Run this effect only once on component mountetIsFilterOpen(!isFilterOpen);
+  }, [filters, yearFilter]); // Run this effect only once on component mountetIsFilterOpen(!isFilterOpen);
 
     return (
         <div className="container-chart ">

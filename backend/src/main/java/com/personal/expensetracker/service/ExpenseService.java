@@ -8,10 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.personal.expensetracker.model.Expense;
 import com.personal.expensetracker.repository.ExpenseRepository;
 import com.personal.helper.CategoryTotal;
+import com.personal.helper.MonthlyExpense;
+import com.personal.helper.MonthlyExpenseProjection;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,5 +77,17 @@ public class ExpenseService {
         LocalDate startOfNextMonth = startOfMonth.plusMonths(1);
 
         return expenseRepository.getTotalCostForEachCategoryForMonth(startOfMonth, startOfNextMonth);
+    }
+    
+    public List<MonthlyExpense> getTotalExpenseForEachMonthOfTheYear(int year) {
+        LocalDate startOfYear = LocalDate.of(year, 1, 1);
+        LocalDate startOfNextYear = startOfYear.plusYears(1);
+
+        // Fetch the results and convert month numbers to month names
+        List<MonthlyExpense> projections = expenseRepository.getTotalExpenseForEachMonthOfTheYear(startOfYear, startOfNextYear);
+        
+        
+        // Convert each MonthlyExpenseProjection to MonthlyExpense with month name
+        return projections;
     }
 }
