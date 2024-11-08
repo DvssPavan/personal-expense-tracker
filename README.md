@@ -92,3 +92,16 @@ The API supports the following CRUD operations:
 - **PUT /expense**: Update an expense
 - **POST /expense**: Create a new expense
 - **POST /api/users/register**: Create a new User
+
+
+    ## UI
+    1. Login Page
+    ![Alt text](./img/Login.png)
+    2. Expense Table Display 
+    ![Alt text](./img/ExpenseTable.png)
+    3. Add Expense
+    ![Alt text](./img/AddExpense.png)
+    4. Expenses filter by year
+    ![Alt text](./img/ExpenseByYear.png)
+    5. Expenses filter by month
+    ![Alt text](./img/ExpenseByMonth.png)
