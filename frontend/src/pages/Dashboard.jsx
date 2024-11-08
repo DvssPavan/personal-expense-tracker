@@ -33,7 +33,6 @@ const Dashboard = () => {
 
   // Monitor changes in the `expenses` state
   useEffect(() => {
-    console.log("Updated expenses:", expenses);
   }, [expenses]);
 
   const [columnDefs] = useState([
@@ -61,7 +60,6 @@ const Dashboard = () => {
         date: newRow.date.toString(),
         category: categories_map[newRow.category],
       });
-      // addExpense(newRow);
       setExpenses((prevExpenses) => [...prevExpenses, newRow]);
 
       setNewRow({ label: "", cost: "", date: "", category: "" }); // Reset input fields

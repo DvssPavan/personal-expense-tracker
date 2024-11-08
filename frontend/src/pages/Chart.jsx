@@ -4,8 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { getTotalCostForEachCategoryForYear, getTotalExpenseForEachMonthOfTheYear, getTotalCostForEachCategoryForMonth, getTotalCostForYear } from '../services/expenseService';
 import Graphs from './Graphs';
 import '../styles/charts-style.css';
-import { Form } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 import FilterModal from '../Modal/FilterModal';
 
 const Chart = () => {
@@ -22,7 +20,6 @@ const Chart = () => {
   };
 
     const years = [2024, 2023, 2022, 2021];
-  // const [selectedYear, setSelectedYear] = useState(years[0]);
 
   
   const saveSelectedYear = async (year) => {
@@ -30,7 +27,6 @@ const Chart = () => {
     setLoading(true);
     const response = await getTotalCostForEachCategoryForYear(year);
     setCategorizedExpenses(response.data);
-    // console.log('Categorized expenses:', response.data);
     setLoading(false);
 
   };
@@ -63,7 +59,6 @@ const Chart = () => {
 
           const expenses = await getTotalExpenseForEachMonthOfTheYear(yearFilter);  
           const categorizedExpenses = await getTotalCostForEachCategoryForMonth(yearFilter, filters['month']);
-          // console.log('Categorized expenses: from fetchAllMontlyExpenses ', categorizedExpenses.data);
           setCategorizedExpenses(categorizedExpenses.data);
           setYearlyExpenses(expenses.data);
           setLoading(false);
@@ -102,13 +97,11 @@ const Chart = () => {
             
             
             <div className='d-flex justify-content-between'>
-            {/* {console.log('Yearly expenses: from char', yearlyExpenses)}
-            {console.log('Categorized expenses: from chart', categorizedExpenses)} */}
             <div className="d-flex justify-content-between">
                     {loading ? (
-                        <div>Loading data...</div> // Display loading message until data is ready
+                        <div>Loading data...</div>
                     ) :
-                        (<Graphs yearlyExpenses={yearlyExpenses} categorizedExpenses={categorizedExpenses} />) // Render Graphs only when data is ready
+                        (<Graphs yearlyExpenses={yearlyExpenses} categorizedExpenses={categorizedExpenses} />)
                     }
             </div>
             </div>

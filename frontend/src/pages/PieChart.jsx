@@ -18,7 +18,7 @@ const DynamicPieChart = ({ categorizedExpenses }) => {
                 label: 'Expenses by Category',
                 data: categorizedExpenses.map((item) => item.totalCost),
                 backgroundColor: colors,
-                borderColor: colors.map(color => color.replace(/0.6/, '1')), // Darken border colors
+                borderColor: colors.map(color => color.replace(/0.6/, '1')),
                 borderWidth: 1,
             },
         ],
@@ -36,7 +36,7 @@ const DynamicPieChart = ({ categorizedExpenses }) => {
             },
         },
     };
-    
+
     return <Pie data={data} options={options} />;
 };
 

@@ -1,7 +1,6 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import api from '../services/api.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import { getExpenses } from '../services/expenseService';
@@ -15,14 +14,12 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
-    console.log(credentials);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
         const token = btoa(`${credentials.username}:${credentials.password}`);
-        // const response = await ; // Replace with your login endpoint
         login(token, credentials.username);
         await getExpenses();
         navigate('/home');

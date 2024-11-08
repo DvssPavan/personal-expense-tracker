@@ -26,7 +26,6 @@ export const ExpenseProvider = ({ children }) => {
   const addFilter = (filter) => {
     // if (isAuthenticated) {
       if (true) {
-        console.log("Filter: ", filter);
         setFilters(filter);
       } else {
         console.error("User must be logged in");
@@ -36,7 +35,6 @@ export const ExpenseProvider = ({ children }) => {
   const addYearFilter = (year) => {
     // if (isAuthenticated) {
       if (true) {
-        // console.log(year);
         setYearFilter(year);
       } else {
         console.error("User must be logged in");
