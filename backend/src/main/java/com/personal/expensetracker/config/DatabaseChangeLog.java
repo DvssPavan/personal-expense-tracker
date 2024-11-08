@@ -39,6 +39,7 @@ public class DatabaseChangeLog {
         expense.setCost(amount);
         expense.setCategory(expenseCategory);
         expense.setDate(date);
+        expense.setUsername("Pavan");
         return expense;
     }
 }

@@ -9,8 +9,6 @@ const BarChart = ({ yearlyExpenses }) => {
     let db_labels = [];
     let db_data = [];
     let db_borderColors = [];
-    console.log(yearlyExpenses);
-    console.log(indexMonthMap);
     // console.log("Yearly expenses from BarChart", yearlyExpenses);
     if(filters['month']) {
         db_labels = yearlyExpenses.map((expense) => expense.month);

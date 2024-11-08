@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.personal.expensetracker.dto.ExpenseDTO;
 import com.personal.expensetracker.model.Expense;
 import com.personal.expensetracker.service.ExpenseService;
 import com.personal.helper.CategoryTotal;
@@ -29,19 +30,19 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @PostMapping
-    public ResponseEntity addExpense(@RequestBody Expense expense) {
-        expenseService.addExpense(expense);
+    public ResponseEntity addExpense(@RequestBody ExpenseDTO expenseDTO) {
+        expenseService.addExpense(expenseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping
-    public ResponseEntity updateExpense(@RequestBody Expense expense) {
-        expenseService.updateExpense(expense);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+//    @PutMapping
+//    public ResponseEntity updateExpense(@RequestBody Expense expense) {
+//        expenseService.updateExpense(expense);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//    }
 
     @GetMapping
-    public ResponseEntity<List<Expense>> getAllExpenses() {
+    public ResponseEntity<List<ExpenseDTO>> getAllExpenses() {
         return ResponseEntity.ok(expenseService.getAllExpenses());
     }
 
@@ -50,11 +51,11 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.getExpense(name));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteExpense(@PathVariable String id) {
-        expenseService.deleteExpense(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity deleteExpense(@PathVariable String id) {
+//        expenseService.deleteExpense(id);
+//        return ResponseEntity.noContent().build();
+//    }
     
     @GetMapping("/total-cost/year")
     public ResponseEntity<BigDecimal> getTotalCostForYear(@RequestParam int year) {

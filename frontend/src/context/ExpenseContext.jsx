@@ -15,12 +15,13 @@ export const ExpenseProvider = ({ children }) => {
 
   const addExpense = (expense) => {
     /* TODO: Check if user is authenticated before adding expense */
-    // if (isAuthenticated) {
+    if (isAuthenticated) {
         if (true) {
       setExpenses((prevExpenses) => [...prevExpenses, expense]);
     } else {
       console.error("User must be logged in to add expenses");
     }
+  }
   };
   
   const addFilter = (filter) => {
@@ -59,7 +60,7 @@ export const ExpenseProvider = ({ children }) => {
   }, []);
 
   return (
-    <ExpenseContext.Provider value={{ expenses, addExpense, filters, addFilter, yearFilter, addYearFilter, loading }}>
+    <ExpenseContext.Provider value={{ expenses, setLoading, setExpenses, addExpense, filters, addFilter, yearFilter, addYearFilter, loading }}>
       {children}
     </ExpenseContext.Provider>
   );

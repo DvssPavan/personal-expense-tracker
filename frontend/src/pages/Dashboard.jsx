@@ -9,13 +9,29 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Dashboard = () => {
-  const { expenses, loading, addExpense } = useExpense();
-
+  const { expenses, loading, addExpense, setExpenses, setLoading } = useExpense();
+  const {user} = useAuth();
   if (loading) return <div>Loading expenses...</div>;
 
   const { logout } = useAuth();
   const gridRef = useRef();
   const [gridApi, setGridApi] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchInitialExpenses = async () => {
+  //     try {
+  //       const data = await getExpenses(); // Fetch expenses with default pagination
+  //       setExpenses(data); // Set fetched data to expenses state
+  //     } catch (error) {
+  //       console.error('Error fetching initial expenses:', error);
+  //     } finally {
+  //       setLoading(false); // Set loading to false once data is fetched
+  //     }
+  //   };
+
+  //   fetchInitialExpenses();
+  //   console.log("In Dashboard");
+  // }, []);
 
   const [columnDefs] = useState([
     { field: "id", headerName: "Row No" },
@@ -69,21 +85,22 @@ const Dashboard = () => {
           // const expenses  = await getExpenses();
           const rowThisPage = expenses.slice(params.startRow, params.endRow);
           const lastRow =
-            expenses.length <= params.endRow ? expenses.length : -1;
+          expenses.length <= params.endRow ? expenses.length : -1;
           params.successCallback(rowThisPage, lastRow);
         }, 500);
       },
     };
     params.api.sizeColumnsToFit();
-
     params.api.setGridOption("datasource", dataSource);
   }, []);
+
+  
 
   return (
     <div className=" container w-100 mt-2 ">
       <div className="d-flex justify-content-between">
         <h2>
-          Hello <span className="text-primary ">X,</span> Here's your expense
+          Hello <span className="text-primary ">{user},</span> Here's your expense
           Dashboard!
         </h2>
         <button className="btn px-4 py-2  btn-secondary mb-3" onClick={logout}>
@@ -103,16 +120,6 @@ const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {/* {expenses.map((expense, index) => (
-            <tr key={index}>
-              <td> {expense.rowno}</td>
-              <td>{expense.label}</td>
-              <td>${expense.cost.toFixed(2)}</td>
-              <td>{expense.date}</td>
-              <td>{expense.category}</td>
-            </tr>
-          ))} */}
-          {/* Row for adding new data */}
           <tr>
             <td>
               <input
@@ -193,7 +200,6 @@ const Dashboard = () => {
           onGridReady={onGridReady}
           pagination={true}
           paginationPageSize={10} // Number of rows per page
-          cacheBlockSize={10} // Block size for each fetch, same as page size
           paginationPageSizeSelector={[10, 20, 50, 100]} // Add 10 to the selector
         />
       </div>

@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 import FilterModal from '../Modal/FilterModal';
 
 const Chart = () => {
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
     const { yearFilter, addYearFilter, filters } = useExpense();
     const [selectedMonth, setSelectedMonth] = useState('');
     const [yearlyExpenses, setYearlyExpenses] = useState([]);
@@ -82,7 +82,7 @@ const Chart = () => {
         <div className='container-outer-box'>
             
             <div className='container-box'>
-                <h2>Hello X, </h2>
+                <h2>Hello<span className="text-primary "> {user}</span> , your charts</h2>
                 <button className="btn btn-secondary mb-3" onClick={logout}>Logout</button>
             </div>
             <div className=" d-flex">

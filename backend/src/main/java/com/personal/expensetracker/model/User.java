@@ -1,34 +1,28 @@
 package com.personal.expensetracker.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document("expense")
-public class Expense {
+@Document("users")  // Collection name in MongoDB
+public class User {
+
     @Id
     private String id;
-    @Field("label")
+
     @Indexed(unique = true)
-    private String label;
-    @Field("category")
-    private ExpenseCategory category;
-    @Field("cost")
-    private BigDecimal cost;
-    @Field("date")
-    private LocalDate date;
     @Field("username")
     private String username;
+    @Field("password")
+    private String password;  // Store hashed password only
 }
