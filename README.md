@@ -3,6 +3,7 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Featuers](#Features)
 - [Technologies Used](#technologies-used)
 - [Setup](#setup)
 - [Running the Application](#running-the-application)
@@ -25,6 +26,7 @@ The Expense Tracker Application is a web application developed using React.js, S
 ## Features
 
 - Authentication
+- Add Expenses
 - Expenses dashboard
 - Pagination of expenses
 - Search Expenses
