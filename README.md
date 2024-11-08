@@ -3,11 +3,12 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Featuers](#Features)
 - [Technologies Used](#technologies-used)
+- [Featuers](#Features)
 - [Setup](#setup)
-- [Running the Application](#running-the-application)
+- [Access the Application](#Access-the-Application)
 - [API Endpoints](#api-endpoints)
+- [Application Screenshots](#UI)
 
 ## Introduction
 
@@ -95,13 +96,13 @@ The API supports the following CRUD operations:
 
 
     ## UI
-    1. Login Page
+    1. **Login Page**
     ![Alt text](./img/Login.png)
-    2. Expense Table Display 
+    2. **Expense Table Display**
     ![Alt text](./img/ExpenseTable.png)
-    3. Add Expense
+    3. **Add Expense**
     ![Alt text](./img/AddExpense.png)
-    4. Expenses filter by year
+    4. **Expenses filter by year**
     ![Alt text](./img/ExpensesByYear.png)
-    5. Expenses filter by month
+    5. **Expenses filter by month**
     ![Alt text](./img/ExpensesByMonth.png)
