@@ -1,7 +1,6 @@
 // src/context/ExpenseContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useAuth } from './AuthContext';
-import { getExpenses } from '../services/expenseService';
 const ExpenseContext = createContext();
 
 export const useExpense = () => useContext(ExpenseContext);
@@ -43,21 +42,6 @@ export const ExpenseProvider = ({ children }) => {
         console.error("User must be logged in");
       }
   };
-
-  useEffect(() => {
-    const fetchInitialExpenses = async () => {
-      try {
-        const data = await getExpenses(); // Fetch expenses with default pagination
-        setExpenses(data); // Set fetched data to expenses state
-      } catch (error) {
-        console.error('Error fetching initial expenses:', error);
-      } finally {
-        setLoading(false); // Set loading to false once data is fetched
-      }
-    };
-
-    fetchInitialExpenses();
-  }, []);
 
   return (
     <ExpenseContext.Provider value={{ expenses, setLoading, setExpenses, addExpense, filters, addFilter, yearFilter, addYearFilter, loading }}>

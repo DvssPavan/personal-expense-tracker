@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useExpense } from "../context/ExpenseContext";
 import { useAuth } from "../context/AuthContext";
@@ -10,28 +9,32 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Dashboard = () => {
   const { expenses, loading, addExpense, setExpenses, setLoading } = useExpense();
-  const {user} = useAuth();
-  if (loading) return <div>Loading expenses...</div>;
-
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const gridRef = useRef();
   const [gridApi, setGridApi] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchInitialExpenses = async () => {
-  //     try {
-  //       const data = await getExpenses(); // Fetch expenses with default pagination
-  //       setExpenses(data); // Set fetched data to expenses state
-  //     } catch (error) {
-  //       console.error('Error fetching initial expenses:', error);
-  //     } finally {
-  //       setLoading(false); // Set loading to false once data is fetched
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchInitialExpenses = async () => {
+      try {
+        const data = await getExpenses(); // Fetch expenses with default pagination
+        setExpenses(data); // Set fetched data to expenses state
+      } catch (error) {
+        console.error('Error fetching initial expenses:', error);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
+      }
+    };
 
-  //   fetchInitialExpenses();
-  //   console.log("In Dashboard");
-  // }, []);
+    fetchInitialExpenses();
+    return () => {
+      setExpenses([]);
+    };
+  }, [setExpenses, setLoading]);
+
+  // Monitor changes in the `expenses` state
+  useEffect(() => {
+    console.log("Updated expenses:", expenses);
+  }, [expenses]);
 
   const [columnDefs] = useState([
     { field: "id", headerName: "Row No" },
@@ -58,7 +61,9 @@ const Dashboard = () => {
         date: newRow.date.toString(),
         category: categories_map[newRow.category],
       });
-      addExpense(newRow);
+      // addExpense(newRow);
+      setExpenses((prevExpenses) => [...prevExpenses, newRow]);
+
       setNewRow({ label: "", cost: "", date: "", category: "" }); // Reset input fields
       alert(
         "Row added successfully, Please refresh the page to see the changes"
@@ -68,49 +73,41 @@ const Dashboard = () => {
     }
   };
 
-  // Handle change in input fields for the new row
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewRow((prev) => ({ ...prev, [name]: value }));
   };
 
-  // onGridReady callback to initialize the grid and set the datasource
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
     gridRef.current = params.api;
     const dataSource = {
       getRows: async (params) => {
-        // console.log('asking for ' + params.startRow + ' to ' + params.endRow)
-        setTimeout(async () => {
-          // const expenses  = await getExpenses();
+        setTimeout(() => {
           const rowThisPage = expenses.slice(params.startRow, params.endRow);
-          const lastRow =
-          expenses.length <= params.endRow ? expenses.length : -1;
+          const lastRow = expenses.length <= params.endRow ? expenses.length : -1;
           params.successCallback(rowThisPage, lastRow);
         }, 500);
       },
     };
     params.api.sizeColumnsToFit();
     params.api.setGridOption("datasource", dataSource);
-  }, []);
-
-  
+  }, [expenses]);
 
   return (
-    <div className=" container w-100 mt-2 ">
+    <div className="container w-100 mt-2">
       <div className="d-flex justify-content-between">
         <h2>
-          Hello <span className="text-primary ">{user},</span> Here's your expense
-          Dashboard!
+          Hello <span className="text-primary">{user}</span>, Here's your expense Dashboard!
         </h2>
-        <button className="btn px-4 py-2  btn-secondary mb-3" onClick={logout}>
+        <button className="btn px-4 py-2 btn-secondary mb-3" onClick={logout}>
           Logout
         </button>
       </div>
 
       {/* Table to display expenses with an option to add new rows */}
       <table className="table table-striped table-bordered mb-3">
-        <thead className="">
+        <thead>
           <tr>
             <th>Label</th>
             <th>Cost</th>
@@ -146,7 +143,7 @@ const Dashboard = () => {
                 type="date"
                 name="date"
                 placeholder="Date"
-                className="form-control "
+                className="form-control"
                 value={newRow.date}
                 onChange={handleInputChange}
               />
@@ -175,49 +172,23 @@ const Dashboard = () => {
         </tbody>
       </table>
 
-      {/* Add Row Button */}
-      <div></div>
-
-      {/* Search Input
-      <input
-        type="text"
-        placeholder="Search by Label"
-        onChange={handleSearch}
-        className="form-control mb-10"
-      /> */}
-
-      {/* AG Grid Table */}
       <div
         className="ag-theme-alpine container mt-2"
         style={{ height: 450, width: "100%" }}
       >
-        <AgGridReact
+       {expenses.length ? <AgGridReact
           ref={gridRef}
           className="expense-data"
-          // rowData={expenses}
           rowModelType="infinite"
           columnDefs={columnDefs}
           onGridReady={onGridReady}
           pagination={true}
-          paginationPageSize={10} // Number of rows per page
-          paginationPageSizeSelector={[10, 20, 50, 100]} // Add 10 to the selector
-        />
+          paginationPageSize={10}
+          paginationPageSizeSelector={[10, 20, 50, 100]}
+        /> : null}
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-
-{
-  /* TODO's
-1. APIs to fetch and save data
-2. Add a delete button to delete a row
-3. Add a search bar to filter rows
-4. Add a chart to display expenses
-5. Add a feature to edit a row
-6. Add a feature to sort rows
-7. Add a feature to filter rows based on category
-8. Add a feature to filter rows based on date
-*/
-}

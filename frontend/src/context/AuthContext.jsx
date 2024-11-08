@@ -22,6 +22,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setIsAuthenticated(localStorage.getItem('authToken'));
+
+    return () => {
+      setIsAuthenticated(false);
+      localStorage.removeItem('authToken');
+    };
   }, []);
 
   const setUserName = (name) => {
