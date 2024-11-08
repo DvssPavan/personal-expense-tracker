@@ -102,6 +102,6 @@ The API supports the following CRUD operations:
     3. Add Expense
     ![Alt text](./img/AddExpense.png)
     4. Expenses filter by year
-    ![Alt text](./img/ExpenseByYear.png)
+    ![Alt text](./img/ExpensesByYear.png)
     5. Expenses filter by month
-    ![Alt text](./img/ExpenseByMonth.png)
+    ![Alt text](./img/ExpensesByMonth.png)
