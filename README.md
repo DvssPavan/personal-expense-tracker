@@ -3,11 +3,12 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Featuers](#Features)
 - [Technologies Used](#technologies-used)
+- [Featuers](#Features)
 - [Setup](#setup)
-- [Running the Application](#running-the-application)
+- [Access the Application](#Access-the-Application)
 - [API Endpoints](#api-endpoints)
+- [Application Screenshots](#UI)
 
 ## Introduction
 
