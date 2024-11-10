@@ -20,6 +20,7 @@ The Expense Tracker Application is a web application developed using React.js, S
 - react-chartjs-2
 - Java 17
 - Spring Boot 3.0.0
+- Spring Security
 - MongoDB
 - Mongock
 - Swagger
