@@ -9,6 +9,9 @@
 - [Access the Application](#Access-the-Application)
 - [API Endpoints](#api-endpoints)
 - [Application Screenshots](#UI)
+- [Testing Capabilities](#testing-capabilities)
+- [Technical Specifications](#technical-specifications)
+- [Flow Diagrams](#flow-diagrams)
 
 ## Introduction
 
@@ -17,7 +20,6 @@ The Expense Tracker Application is a web application developed using React.js, S
 ## Technologies Used
 
 - React.js
-- react-chartjs-2
 - Java 17
 - Spring Boot 3.0.0
 - Spring Security
@@ -107,3 +109,39 @@ The API supports the following CRUD operations:
     ![Alt text](./img/ExpensesByYear.png)
     5. **Expenses filter by month**
     ![Alt text](./img/ExpensesByMonth.png)
+
+## Testing Capabilities
+- **Backend** : Mockito
+```bash
+mvn test
+mvn -Dtest:=ExpenseServiceTest test
+```
+- **Frontend** : Jest
+```bash
+npm test
+```
+
+## Technical Specifications
+**Frontend**
+- React-Bootstrap
+- AG-Grid
+- React Router
+- ContextAPI
+- React-chart.js
+- Axios
+
+**Backend**
+- Spring Security
+- lombok
+- Mongock
+- mockito
+
+## Flow Diagrams
+**Frontend**
+
+ ![Alt text](./img/frontend.png)
+
+**Backend**
+  ![Alt text](./img/backend.png)
+  
+
